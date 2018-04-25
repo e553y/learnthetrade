@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Web Dev. Exercises</title>
+		<meta charset="UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" type="text/css" href="styles.css?1.2"/>
+		<script src="script.js?1.2"></script>
+		<script src="calculator.js?1.2"></script>
+		<script src="temp.js?1.2"></script>
+		<script src="graph.js?1.2"></script>
+		<script src="thermometer.js?1.2?1.1"></script>
+		<script src="weather.js"></script>
+	</head>
+	<body onload="onLoad()" onresize="onResize()">
+		<div class='pane active' id='home' >
+			<div class="calcContainer subPane" >
+				<div>
+					<h1>Calculator</h1>
+					<p>Calculates all four basic operations: addition, subtraction, multiplication and division. bonus: press "x" twice to calculate exponents! </p>
+				</div>
+
+				<div class="calcPane active" id="calcHome">
+					<div id="header">
+						<header>Simple Calculator</header>
+					</div>
+					<div id="outPut">
+						<input type="button" class="absBtn" onclick="paneHandler(event)" value="Graph">
+						<output id="exp"></output>
+						<output id="ans"></output>
+					</div>
+					<div class="btnGrp" id="btnGrp">
+						<button id="btn0" value="0">0</button><!--
+--><button id="btn1" value="1">1</button><!--
+--><button id="btn2" value="2">2</button><!--
+--><button id="btn+" value="+">+</button><!--
+--><button id="btn3" value="3">3</button><!--
+--><button id="btn4" value="4">4</button><!--
+--><button id="btn5" value="5">5</button><!--
+--><button id="btn-" value="-">-</button><!--
+--><button id="btn6" value="6">6</button><!--
+--><button id="btn7" value="7">7</button><!--
+--><button id="btn8" value="8">8</button><!--
+--><button id="btnx" value="x">x</button><!--
+--><button id="btn9" value="9">9</button><!--
+--><button id="btnC" value="C">C</button><!--
+--><button id="btn=" value="=">=</button><!--
+--><button id="btn/" value="/">/</button>
+
+					</div>
+				</div>
+				<div class="calcPane centeralize" id="graphParam">
+					<label class="centeralize">choose the type of equation</label>
+					<form id="graphType">
+
+						<div class="equation">
+							<input type = "checkbox"  name = "eqType"  value="linear" ><label> y = ax + b </label>
+							<fieldset class="subForm" id="linear">
+								<div class="parameters">
+									<label>a=<input type="number" name="linear_a"></label>
+									<label>b=<input type="number" name="linear_b"></label>
+								</div>
+								<input class = "button" type="button" value="Draw graph" name="drawGraph" >
+							</fieldset>
+						</div>
+						<div class="equation">
+							<input type = "checkbox"  name = "eqType"  value="quadratic"><label>y = ax<sup>2</sup> + bx + c</label>
+							<fieldset class="subForm" id="quadratic">
+								<label>a=</label><input type="number" name="quadratic_a">
+								<label>b=</label><input type="number" name="quadratic_b">
+								<label>c=</label><input type="number" name="quadratic_c">
+								<input class = "button" type="button" value="Draw graph" name="drawGraph" >
+							</fieldset>
+						</div>
+						<div class="equation">
+							<input type = "checkbox"  name = "eqType"  value="inverse"><label>y = a/x </label>
+							<fieldset class="subForm" id="inverse">
+								<label>a=</label><input type="number" name="inverse_a"><br>
+								<input class = "button" type="button" value="Draw graph" name="drawGraph" >
+							</fieldset>
+						</div>
+						<div class="equation">
+							<input type = "checkbox"  name = "eqType"  value="circle"><label>y<sup>2</sup> =  a - x<sup>2</sup></label>
+							<fieldset class="subForm" id="circle">
+								<label>a=</label><input type="number" name="circle_a"><br>
+								<input class = "button" type="button" value="Draw graph" name="drawGraph" >
+							</fieldset>
+						</div>
+						<div class="equation">
+							<input type = "checkbox"  name = "eqType"  value="absolute"><label > y = |-ax|</label>
+							<fieldset class="subForm" id="absolute">
+								<label>a=</label><input type="number" name="absolute_a"><br>
+								<input class = "button" type="button" value="Draw graph" name="drawGraph" >
+							</fieldset>
+						</div>
+						<div class="equation">
+							<input type = "checkbox"  name = "eqType"  value="sine"><label>y = -a |sine x|</label>
+							<fieldset class="subForm" id="sine">
+								<label>a=</label><input type="number" name="sine_a">
+								<label>b=</label><input type="number" name="sine_b"><br>
+								<input class = "button" type="button" value="Draw graph" name="drawGraph" >
+							</fieldset>
+						</div>
+						<div>
+							<input id="reenterParam" type="button" class="rtrnButton" onclick="paneHandler(event)" value="< return to calculator">
+						</div>
+					</form>
+
+				</div>
+				<div class="calcPane" id="graphDraw">
+					<div id="canvasPane"  ><!--
+						<form id="graphControl" name="graphControl">
+							<input type="button" value="< back ">
+						</form>-->
+						<canvas id="graph" width="280" height="480">##Error: Canvas not supported in your browser##</canvas>
+					</div>
+				</div>
+
+			</div>
+			<div class="tempContainer subPane">
+				<div>
+					<h1>Temperature converter</h1>
+					<p>Input a value in the text boxes or move the thermometer level to see the converted values</p>
+				</div>
+				<div id="thermometerDiv">
+					<canvas id="tempCanvas" width="10" height="10">Please use a browser which supports canvas</canvas>
+				</div>
+
+				<div>
+					<form  id="tempFrm" name="measurement"  >
+						<div id="textBoxes">
+							<div id="cText">
+								<label>Celcius :</label>
+								<input class="textField" id="celcius" type="number" onclick="select()" />
+							</div>
+							<div id="fText">
+								<label>fahrenheit:</label>
+								<input class="textField" id="fahrenheit"  onclick="select()" type="number" />
+							</div>
+						</div>
+					</form>
+				</div>
+				<div>
+					<input id="weatherNowBtn" type="button" class="bigBtn" onclick="paneHandler(event)" value="What is the weather now?">
+				</div>
+
+			</div>
+		</div>
+		<div class="pane" id="zipRequest">
+			<div class="subPane" id="zipSubPane">
+				<div>
+					<h1> Input your Zip-Code To get the current weather. </h1>
+				</div>
+				<div>				
+					<form id="zipForm">
+
+						<input class="centeralize" type="number" id="zipInput" placeholder="Enter Your Zip-Code">
+						<input id="getWeatherBtn" type="button" class="bigBtn" onclick="getWeather(); paneHandler(event);" value="Get current weather">
+					</form>
+
+				</div>
+				<div>
+					<input id="backToHome" type="button" class="rtrnButton" onclick="paneHandler(event)" value="< back to temperature converter">
+				</div>
+			</div>
+		</div>
+		<div class="pane" id="weatherDisplay">
+			<div class="subPane" id="weatherSubPane">
+				<div>
+					<span class="bigLabel"><sup>o</sup>F</span>
+
+					<label class="switch">
+						<input type="checkbox" id="tempToggle" onclick="tempToggleHandler(event)">
+						<span class="slider round"></span>
+					</label>
+					<span class="bigLabel"><sup>o</sup>C</span>
+				</div>
+				<div class="centeralize">
+					<h1><span data-source=".name">Retrieving Weather...</span><span ></span></h1>
+					<h1><span data-source=".main.temp" data-action-temp="fahrenheit"></span></h1>
+					<h2><span data-source=".weather[0].main" class="centeralize"></span></h2>
+					<h3><span data-source=".weather[0].description" ></span></h3>
+					<h3><span data-source=".main.temp_min" data-action-temp="fahrenheit"></span>/<span data-source=".main.temp_max" data-action-temp="fahrenheit"></span></h3>
+				</div>			
+				<div class="centeralize">
+					<h3>humidity : <span data-source=".main.humidity" ></span>%</h3>
+					<h3>wind speed: <span data-source=".wind.speed"></span>mph</h3>
+					<h3>wind direction: <span data-source=".wind.deg"></span><sup>o</sup></h3>
+				</div>
+				<div>
+					<input id="reenterZip" type="button" class="rtrnButton" onclick="paneHandler(event)" value="< Enter Another Zip">
+				</div>
+
+			</div>
+
+		</div>
+
+	</body>
+</html>
