@@ -344,6 +344,8 @@ class GraphCanvas{
 	}
 
 	retrieveEquations(){
+		/*empty equations array*/
+		this.equations = [];
 		/*get the equation from the document */
 		//debugger;
 		let checked =  Array.from( document.forms.graphType.eqType ).filter( (e)=> e.checked );
