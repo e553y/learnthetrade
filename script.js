@@ -57,7 +57,8 @@ function onResize(){
 	if (timeOut != null)clearTimeout(timeOut);
 
 	timeOut = setTimeout(function(){
-		thermometerObject.resizeThermometer();thermometerObject.drawThermometer();
+		thermometerObject.resizeThermometer();
+		thermometerObject.drawThermometer();
 	}, 500);//wait .5 sec to make sure resizing is done
 
 
