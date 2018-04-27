@@ -147,9 +147,6 @@ background-color: #eee;
 	height: 100%;	
 
 }
-#textBoxes{
-	display: flex;
-	justify-content: center;
 
 #tempFrm input{
 
