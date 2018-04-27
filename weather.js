@@ -51,3 +51,6 @@ function convertTempData(desiredScale){
 		node.innerHTML = converted + "<sup>o</sup>" + desiredScale;
 	});
 }
+function roundTo(number,precision = 100){
+	return Math.round(number*precision)/precision;
+}
