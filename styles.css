@@ -1,14 +1,12 @@
 *{
 	padding: 0px;
 	margin : 0px;
-
 	font-family: "Trebuchet MS", Helvetica, sans-serif
 		/*outline: 1px solid black;
 		*/
 }
 html{
 	font-size: 62.5%;
-	overflow: auto;
 }
 
 .pane { /*making all panes hidden at the start*/
@@ -17,38 +15,23 @@ html{
 }
 
 .pane.active {
-	display: grid;
-	box-sizing: border-box;
+	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
 	margin: auto;
 }
 
 .subPane{
-	display: grid;
-	grid-template-columns: 1fr;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
 	width: 96vw;
 	height: 96vh;
-	margin: 2vh 2vw;
+	margin: 2vh;
 	box-shadow: 0px 0px 3px;
 	border-radius: 5px;
-	overflow: auto;
-
+	overflow: hidden;
 }
-.subPane.tempContainer{
-	grid-template-rows: 1fr 5fr 1fr 1fr;
-	align-items: stretch;
-}
-/*
-
-.subPane > div{
-background-color: #ddd;
-}
-.subPane > div:nth-child(2n-1){
-background-color: #eee;
-}
-*/
-
 .calcPane.active{ /*this pane will change to parameter and graph panes*/
 
 
@@ -142,40 +125,47 @@ background-color: #eee;
 }
 
 #tempFrm{
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	grid-column-gap: 1em;
+	display: flex;
+	flex-direction: column;
 	align-content: center;
 	width: 100%;
 	height: 100%;	
 
 }
+#textBoxes{
+	display: flex;
+	justify-content: center;
 
-#tempFrm input{
-
+}
+#textBoxes input{
 	height: 1.4em;
 	width: 100%;
-	box-sizing: border-box;
 	text-align: right;
 	font-size: 1.2em;
 	font-weight: bolder;
 	resize: none;	
 	overflow: hidden;
 }
-
-
-
+#textBoxes > *{
+	display: inline-block;
+	font-size: 1.6rem;
+	padding: 2px 10px;
+}
 
 
 #thermometerDiv{
-
-
+	box-sizing: border-box;
+	
+	flex-grow: 1;
+	flex-shrink: 1;
+	max-height: 60%;
+		
 }
 
 
 .subForm{
 	visibility: hidden;
-	/*	padding-left: 30px;*/
+/*	padding-left: 30px;*/
 	border: none; 
 
 }
@@ -204,7 +194,7 @@ fieldset > .button{
 .rtrnButton{
 	display: block;
 	margin: auto;
-
+	
 	margin-bottom: 10px;
 }
 .textField ,label {
@@ -216,8 +206,8 @@ fieldset > .button{
 #zipForm  *{
 	margin: auto;
 	display: block;
-
-}
+	
+	}
 .bigBtn{
 	width: 200px;
 	height: 50px;
@@ -226,55 +216,54 @@ fieldset > .button{
 }
 .centeralize{
 	text-align: center;
-
-
-}
-.switch {
-	position: relative;
-	display: inline-block;
-	width: 40px;
-	height: 20px;
+	
+	
+}.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
 }
 
 .switch input {display: none;}
 
 .slider {
-	position: absolute;
-	cursor: pointer;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background-color: #ccc;
-	-webkit-transition: .4s;
-	transition: .4s;
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
 }
 
 .slider:before {
-	position: absolute;
-	content: "";
-	height: 16px;
-	width: 16px;
-	left: 2px;
-	bottom: 2px;
-	background-color: white;
-	-webkit-transition: .4s;
-	transition: .4s;
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
 }
 
 input:checked + .slider:before {
-	-webkit-transform: translateX(20px);
-	-ms-transform: translateX(20px);
-	transform: translateX(20px);
+  -webkit-transform: translateX(20px);
+  -ms-transform: translateX(20px);
+  transform: translateX(20px);
 }
 
 /* Rounded sliders */
 .slider.round {
-	border-radius: 34px;
+  border-radius: 34px;
 }
 
 .slider.round:before {
-	border-radius: 50%;
+  border-radius: 50%;
 }
 .bigLabel{
 	font-size: 2rem;
