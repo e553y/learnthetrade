@@ -40,8 +40,14 @@ function onLoad(){
 	//adding listner to temperature converter
 	tempFrm.oninput = function(event){converter(event,thermometerObject)};
 
-	//make htmlrequest for JSON data
-
+	//make adjust panes width and height to the viewport
+	document.querySelectorAll('.subPane').forEach( (e)=>{
+		e.style.width = 0.96 * window.innerWidth + "px";
+		e.style.height = 0.96 *  window.innerHeight + "px";
+		e.style.margin = (0.02 * window.innerHeight) + "px, " + (0.02 * window.innerWidth) + "px";
+		
+	})
+	
 
 
 
