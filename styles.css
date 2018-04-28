@@ -86,6 +86,7 @@ background-color: #eee;
 }
 #outPut{
 	box-sizing: border-box;
+	position: relative;
 	width: 95%;
 	height: 20%;
 	margin: auto;
