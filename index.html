@@ -109,8 +109,9 @@
 				</div>
 				<div class="calcPane" id="graphDraw">
 					<div id="canvasPane"  ><!--
+						##feature to be added in the future##
 						<form id="graphControl" name="graphControl">
-							<input type="button" value="< back ">
+						<input type="button" value="< back ">
 						</form>-->
 						<canvas id="graph" width="280" height="480">##Error: Canvas not supported in your browser##</canvas>
 					</div>
@@ -128,16 +129,18 @@
 
 				<div>
 					<form  id="tempFrm" name="measurement"  >
-						<div id="textBoxes">
-							<div id="cText">
-								<label>Celcius :</label>
+
+						<div id="cText">
+							<label>Celcius :
 								<input class="textField" id="celcius" type="number" onclick="select()" />
-							</div>
-							<div id="fText">
-								<label>fahrenheit:</label>
-								<input class="textField" id="fahrenheit"  onclick="select()" type="number" />
-							</div>
+							</label>
 						</div>
+						<div id="fText">
+							<label>fahrenheit:
+								<input class="textField" id="fahrenheit"  onclick="select()" type="number" />
+							</label>
+						</div>
+
 					</form>
 				</div>
 				<div>
