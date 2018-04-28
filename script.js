@@ -57,7 +57,7 @@ function onLoad(){
 timeOut = null;
 function onResize(){
 	makeFullScreen();
-	centerCanvas();
+	centerThermometer();
 
 
 }
@@ -166,7 +166,7 @@ function makeFullScreen(){
 };
 
 /*makes the thermometer height and width equal to the parent div and centers it*/
-function centerCanvas(){
+function centerThermometer(){
 	if (timeOut != null)clearTimeout(timeOut);
 
 	timeOut = setTimeout(function(){
