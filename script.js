@@ -41,13 +41,9 @@ function onLoad(){
 	tempFrm.oninput = function(event){converter(event,thermometerObject)};
 
 	//make adjust panes width and height to the viewport
-	document.querySelectorAll('.subPane').forEach( (e)=>{
-		e.style.width = 0.96 * window.innerWidth + "px";
-		e.style.height = 0.96 *  window.innerHeight + "px";
-		e.style.margin = (0.02 * window.innerHeight) + "px, " + (0.02 * window.innerWidth) + "px";
-		
-	})
-	
+	makeFullScreen();
+
+
 
 
 
@@ -161,4 +157,14 @@ function evalStr(str){
 function roundTo(number,decPlaces = 2){
 	let precision = Math.pow(10,decPlaces);
 	return Math.round(number*precision)/precision;
+}
+/*makes subPanes full screen*/
+function makeFullScreen(){
+	document.querySelectorAll('.subPane').forEach( (e)=>{
+		e.style.width = 0.96 * window.innerWidth + "px";
+		e.style.height = 0.96 *  window.innerHeight + "px";
+		e.style.margin = (0.02 * window.innerHeight) + "px, " + (0.02 * window.innerWidth) + "px";
+
+	})
+};
 }
