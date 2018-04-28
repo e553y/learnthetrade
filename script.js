@@ -56,11 +56,8 @@ function onLoad(){
 //redraw thermometer canvason resize
 timeOut = null;
 function onResize(){
-	if (timeOut != null)clearTimeout(timeOut);
-
-	timeOut = setTimeout(function(){
-		thermometerObject.resizeThermometer();thermometerObject.drawThermometer();
-	}, 0);
+	makeFullScreen();
+	centerCanvas();
 
 
 }
