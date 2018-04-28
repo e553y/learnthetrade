@@ -1,25 +1,17 @@
 
-function converter(event, thermometer) {
-	
-	
-	let temperature = event.target.value;
-	
-	let fahrenheit = document.getElementById('fahrenheit');
-	let celcius = document.getElementById('celcius');
-	
-	if(event.target.id == "celcius"){
-		
-		let converted = convert(temperature,"F");
-		fahrenheit.value= temperature == ""? "" : roundTo(converted,4);
-		thermometer.updateLevel(temperature);
-		return;
+function converter(event,thermometer){
+	let source = event.target || event.srcElement;
+
+	if(source.id == "celcius" ){
+		console.log(this);
+		this.temperature = source.value;
+		document.getElementById('fahrenheit').value= this.temperature != "" ?  (this.temperature * 9/5) + 32 : "";
+		thermometer.updateLevel(this.temperature);
 	}
-	if(event.target.id == 'fahrenheit'){
-		
-		let converted = convert(temperature,"C");
-		celcius.value= temperature == ""? "" : roundTo(converted,4);
-		thermometer.updateLevel(temperature);
-		return;
+	if(source.id == 'fahrenheit'){
+		this.temperature = source.value != "" ? (source.value -32)* 5/9: "" ;
+		document.getElementById('celcius').value=this.temperature;
+		thermometer.updateLevel(this.temperature);
 	}
 }
 
