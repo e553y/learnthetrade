@@ -150,7 +150,15 @@ function paneHandler(event){
 
 
 
-//helper function to evaluate strings in to executable js code (instead of eval())
+// global helper functions
+
+/*accepts one string argument and evaluates it as a javascript code*/
 function evalStr(str){
 	return Function("return (" + str +")")();
+}
+
+/*accepts two arguments. a number and a decimal places to round to(2 by default) */
+function roundTo(number,decPlaces = 2){
+	let precision = Math.pow(10,decPlaces);
+	return Math.round(number*precision)/precision;
 }
