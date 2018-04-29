@@ -280,7 +280,3 @@ input:checked + .slider:before {
 .bigLabel{
 	font-size: 2rem;
 }
-#quadrant{
-	background-color: aqua;
-	outline: 1px solid red
-}
