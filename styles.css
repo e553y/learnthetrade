@@ -39,7 +39,7 @@ html{
 	grid-template-rows: 1fr 5fr 1fr 1fr;
 	align-items: stretch;
 }
-/*
+
 
 .subPane > div{
 background-color: #ddd;
@@ -47,7 +47,7 @@ background-color: #ddd;
 .subPane > div:nth-child(2n-1){
 background-color: #eee;
 }
-*/
+
 
 .calcPane.active{ /*this pane will change to parameter and graph panes*/
 
