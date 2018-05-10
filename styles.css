@@ -280,3 +280,9 @@ input:checked + .slider:before {
 .bigLabel{
 	font-size: 2rem;
 }
+#tempCanvas {
+	display: block;
+	margin: auto;
+	
+}
+
