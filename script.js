@@ -199,12 +199,14 @@ function makeFullScreen(){
 	})
 };
 
-/*makes the thermometer height and width equal to the parent div and centers it*/
+/*makes the thermometer height and width equal to the parent div and centers it
+
 function centerThermometer(){
 	if (timeOut != null)clearTimeout(timeOut);
 
 	timeOut = setTimeout(function(){
-		thermometerObject.resizeThermometer();
-		thermometerObject.drawThermometer();
+		thermoGuageObject.resizeThermometer();
+		thermoGuageObject.drawThermometer();
 	}, 0);
 }
+*/
