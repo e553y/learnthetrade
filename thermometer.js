@@ -107,7 +107,7 @@ class ThermoGuage{
 		this.centerY = this.canvas.height/2;
 
 		/*guage arc radius*/
-		this.guageArcRadius = options.radius || 0.75 * Math.min(this.centerX,this.centerY); /*radius of the arc set to 80% of half of the smallest side*/
+		this.guageArcRadius = options.radius || 0.70 * Math.min(this.centerX,this.centerY); /*radius of the arc set to 80% of half of the smallest side*/
 
 		/*guage startAngle angle*/
 		this.startAngle = Math.PI + (Math.PI - this.guageArc)/2;
@@ -244,7 +244,7 @@ class ThermoGuage{
 		let incrementAng = this.guageArc / divisions;
 
 		/*set the font of the labels */
-		ctx.font =  "15px Helvetica, sans-serif";          
+		ctx.font =  "13px Helvetica, sans-serif";          
 		ctx.textBaseline = "middle";
 		ctx.textAlign = "center";
 
@@ -281,7 +281,7 @@ class ThermoGuage{
 	duration: //how long the animation should take
 	*/
 	
-	updateLevel(level, duration = 0.8){
+	updateLevel(level, duration = 1){
 		
 		duration *= 1000;//convert duration in to milliseconds
 		let increment = (+level - +this.level);
