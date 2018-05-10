@@ -39,15 +39,3 @@ function converter(event, thermometer) {
 }
 
 
-//converts a number to one of the temperature scales (F or C)
-function convert(number,to){
-	number = Number.parseFloat(number);
-	
-	switch(to){
-		case "C":
-			return ((number - 32) * 5/9);
-		case "F": 
-			return ((number * 9/5) + 32);
-			
-	}
-}
