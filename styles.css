@@ -41,12 +41,6 @@ html{
 }
 
 
-.subPane > div{
-background-color: #ddd;
-}
-.subPane > div:nth-child(2n-1){
-background-color: #eee;
-}
 
 
 .calcPane.active{ /*this pane will change to parameter and graph panes*/
