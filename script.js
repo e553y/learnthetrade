@@ -1,6 +1,6 @@
 //adding event listenenrs after DOM is fully constructed
-// create a thermometer object
-let thermometerObject;
+// create required objects
+let thermoGuageObject;
 let canvasGraphObject;
 let response;
 function onLoad(){	
@@ -8,7 +8,10 @@ function onLoad(){
 	canvasGraphObject = new GraphCanvas(graph);
 
 	//initialize the thermometer
-	thermometerObject = new Thermometer(tempCanvas);
+	thermoGuageObject = new ThermoGuage(tempCanvas);
+	thermoGuageObject.drawGuageArc();
+	thermoGuageObject.drawGuageNeedle();
+	thermoGuageObject.drawScale();
 
 	//adding listner to calculator buttons
 	btnGrp.onclick = clicked();
@@ -31,14 +34,9 @@ function onLoad(){
 	document.getElementById('graph').addEventListener('click',zoomInOut());
 
 
-	//make thermometer canvas width and height fit screen
-	thermometerObject.resizeThermometer();
-
-	//draw the object
-	thermometerObject.drawThermometer();
-
+	
 	//adding listner to temperature converter
-	tempFrm.oninput = function(event){converter(event,thermometerObject)};
+	tempFrm.oninput = function(event){converter(event,thermoGuageObject)};
 
 	//make adjust panes width and height to the viewport
 	makeFullScreen();
