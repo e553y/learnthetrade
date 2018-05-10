@@ -109,8 +109,9 @@
 				</div>
 				<div class="calcPane" id="graphDraw">
 					<div id="canvasPane"  ><!--
+						##feature to be added in the future##
 						<form id="graphControl" name="graphControl">
-							<input type="button" value="< back ">
+						<input type="button" value="< back ">
 						</form>-->
 						<canvas id="graph" width="280" height="480">##Error: Canvas not supported in your browser##</canvas>
 					</div>
@@ -118,26 +119,28 @@
 
 			</div>
 			<div class="tempContainer subPane">
-				<div>
+				<div class="centeralize">
 					<h1>Temperature converter</h1>
-					<p>Input a value in the text boxes or move the thermometer level to see the converted values</p>
+					<p>Input a value in the text boxe to convert</p>
 				</div>
 				<div id="thermometerDiv">
-					<canvas id="tempCanvas" width="10" height="10">Please use a browser which supports canvas</canvas>
+					<canvas id="tempCanvas" width="300" height="300">Please use a browser which supports canvas</canvas>
 				</div>
 
 				<div>
 					<form  id="tempFrm" name="measurement"  >
-						<div id="textBoxes">
-							<div id="cText">
-								<label>Celcius :</label>
+
+						<div id="cText">
+							<label>Celcius :
 								<input class="textField" id="celcius" type="number" onclick="select()" />
-							</div>
-							<div id="fText">
-								<label>fahrenheit:</label>
-								<input class="textField" id="fahrenheit"  onclick="select()" type="number" />
-							</div>
+							</label>
 						</div>
+						<div id="fText">
+							<label>fahrenheit:
+								<input class="textField" id="fahrenheit"  onclick="select()" type="number" />
+							</label>
+						</div>
+
 					</form>
 				</div>
 				<div>

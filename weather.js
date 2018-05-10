@@ -33,11 +33,14 @@ function writeData(obj){
 	let nodes = document.querySelectorAll('*[data-source]');
 	nodes.forEach( (node)=>{
 		node.textContent = evalStr("response"+node.dataset.source);
+		if(node.dataset.actionTemp){
+			node.textContent += "\xB0F";
+		}
 	});
 }
 function tempToggleHandler(event){//handles when the temp toggle is pressed
 	let source = event.target;
-	let desiredScale = source.checked? "C":"F";
+	let desiredScale = source.checked ? "C":"F";
 	convertTempData(desiredScale);
 	
 }
@@ -47,10 +50,7 @@ function convertTempData(desiredScale){
 	let nodes = document.querySelectorAll('*[data-action-temp]');
 	nodes.forEach( (node)=>{
 		let converted =  convert(node.textContent,desiredScale);
-		converted = roundTo(converted);//rounding off
+		converted = floatFix(converted);//rounding off
 		node.innerHTML = converted + "<sup>o</sup>" + desiredScale;
 	});
-}
-function roundTo(number,precision = 100){
-	return Math.round(number*precision)/precision;
 }

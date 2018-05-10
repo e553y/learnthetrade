@@ -1,6 +1,6 @@
 //adding event listenenrs after DOM is fully constructed
-// create a thermometer object
-let thermometerObject;
+// create required objects
+let thermoGuageObject;
 let canvasGraphObject;
 let response;
 function onLoad(){	
@@ -8,7 +8,10 @@ function onLoad(){
 	canvasGraphObject = new GraphCanvas(graph);
 
 	//initialize the thermometer
-	thermometerObject = new Thermometer(tempCanvas);
+	thermoGuageObject = new ThermoGuage(tempCanvas);
+	thermoGuageObject.drawGuageArc();
+	thermoGuageObject.drawGuageNeedle();
+	thermoGuageObject.drawScale();
 
 	//adding listner to calculator buttons
 	btnGrp.onclick = clicked();
@@ -31,16 +34,13 @@ function onLoad(){
 	document.getElementById('graph').addEventListener('click',zoomInOut());
 
 
-	//make thermometer canvas width and height fit screen
-	thermometerObject.resizeThermometer();
-
-	//draw the object
-	thermometerObject.drawThermometer();
-
+	
 	//adding listner to temperature converter
-	tempFrm.oninput = function(event){converter(event,thermometerObject)};
+	tempFrm.oninput = function(event){converter(event,thermoGuageObject)};
 
-	//make htmlrequest for JSON data
+	//make adjust panes width and height to the viewport
+	makeFullScreen();
+
 
 
 
@@ -54,11 +54,8 @@ function onLoad(){
 //redraw thermometer canvason resize
 timeOut = null;
 function onResize(){
-	if (timeOut != null)clearTimeout(timeOut);
-
-	timeOut = setTimeout(function(){
-		thermometerObject.resizeThermometer();thermometerObject.drawThermometer();
-	}, 500);//wait .5 sec to make sure resizing is done
+	makeFullScreen();
+	//centerThermometer();
 
 
 }
@@ -144,7 +141,72 @@ function paneHandler(event){
 
 
 
-//helper function to evaluate strings in to executable js code (instead of eval())
+// global helper functions
+
+/*accepts one string argument and evaluates it as a javascript code*/
 function evalStr(str){
 	return Function("return (" + str +")")();
 }
+
+/*accepts two arguments. a number and a decimal places to round to(2 by default) */
+function floatFix(number,decPlaces = 2){
+	let precision = Math.pow(10,decPlaces);
+	return Math.round(number*precision)/precision;
+}
+
+/*
+general animation algorithm from javascript.info*/
+function animate({timing, draw, duration}) {
+
+	let startTime = performance.now();
+
+	requestAnimationFrame(function animate(time) {
+		// timeFraction goes from 0 to 1
+		let timeFraction = (time - startTime) / duration;
+		if (timeFraction > 1) timeFraction = 1;
+
+		// calculate the current animation state
+		let progress = timing(timeFraction)
+
+		draw(progress); // draw it
+
+		if (timeFraction < 1) {
+			requestAnimationFrame(animate);
+		}
+
+	});
+}
+
+//converts a number to one of the temperature scales (F or C)
+function convert(number,to){
+	number = Number.parseFloat(number);
+	
+	switch(to){
+		case "C":
+			return ((number - 32) * 5/9);
+		case "F": 
+			return ((number * 9/5) + 32);
+			
+	}
+}
+/*makes subPanes full screen*/
+function makeFullScreen(){
+	document.querySelectorAll('.subPane').forEach( (e)=>{
+		e.style.width = 0.96 * window.innerWidth + "px";
+		e.style.height = 0.96 *  window.innerHeight + "px";
+		e.style.margin = (0.02 * window.innerHeight) + "px, " + (0.02 * window.innerWidth) + "px";
+
+	})
+};
+
+/*makes the thermometer height and width equal to the parent div and centers it
+
+function centerThermometer(){
+	if (timeOut != null)clearTimeout(timeOut);
+
+	timeOut = setTimeout(function(){
+		thermoGuageObject.resizeThermometer();
+		thermoGuageObject.drawThermometer();
+	}, 0);
+}
+*/
