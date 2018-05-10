@@ -26,20 +26,20 @@ function zoomInOut(){
 
 		/*y coordinate of the click relative to element*/
 		let yCoord;
-		
+
 		/*convert coordinates to graph values */
 		[xCoord, yCoord ] = o.getCoordVal(event.offsetX,o.canvasHeight - event.offsetY);// subtract from canvas height to account for translated origin 
 
 		/*get which coordinate the click happened*/
 		/*didn't handle when clicked to left of first grid pos*/
-		
+
 		let minX = o.firstXAxisTick + o.gridWidth * Math.floor((xCoord - o.firstXAxisTick) / o.gridWidth);
 		let maxX = minX + o.gridWidth;
 
 		let minY =  o.firstYAxisTick + o.gridHeight * Math.floor((yCoord - o.firstYAxisTick) / o.gridHeight); 
 		let maxY = minY + o.gridHeight;
 
-		
+
 		/*update graph*/
 		o.updateRange([minX,maxX,minY,maxY]);
 		/*update isZoomed state*/
@@ -93,13 +93,13 @@ class GraphCanvas{
 
 		/*y axis bottom tick position(grid postion)*/
 		this.firstYAxisTick;
-		
+
 		/*grid width in values*/
 		this.gridWidth;
-		
+
 		/*grid height in values*/
 		this.gridHeight;
-		
+
 		/*pixel distance between consecutive x axis ticks*/
 		this.vGridDiff;
 
@@ -108,6 +108,9 @@ class GraphCanvas{
 
 		/*prepare an array for equations to go in to*/
 		this.equations = [];
+		
+		/*color collection array*/
+		this.colorArray = ["blue","red","yellow","orange","green","aqua"]
 	}
 
 
@@ -156,7 +159,7 @@ class GraphCanvas{
 		this.ctx.clearRect(0,-this.canvasHeight,this.canvasWidth,this.canvasHeight);
 	}
 	updateRange(range){
-		
+
 		if(!range || range.length != 4 ) return;
 
 		[this.minX,this.maxX,this.minY,this.maxY] = range;
@@ -165,8 +168,8 @@ class GraphCanvas{
 
 		this.scaleX = (this.maxX - this.minX)/this.canvasWidth;
 		this.scaleY = (this.maxY - this.minY)/this.canvasHeight;
-		
-		
+
+
 		/*redraw graph*/
 		this.clearGraph();
 		this.drawGrid();
@@ -179,10 +182,17 @@ class GraphCanvas{
 	drawEquations(){
 
 		/*this draws equations on the canvas*/
-		this.equations.forEach( (e)=> strokeEquation.call(this,e) );
+		this.ctx.save();
+		
+		
+		this.equations.forEach( (e,index)=> strokeEquation.call(this,e,this.colorArray[index]) );
+		
 
-		function strokeEquation(func){
+
+		function strokeEquation(func,color){
+
 			this.ctx.beginPath();
+			this.ctx.strokeStyle = color;
 
 			for( let i = 0; i <= this.canvasWidth ; i += 1 ){
 
@@ -202,8 +212,11 @@ class GraphCanvas{
 					this.ctx.lineTo(i, this.getYPixelPos(yValue)); 
 				}
 				this.ctx.stroke();
+				
 			}
 		}
+		this.ctx.restore();
+
 	}
 	drawAxes(){
 		/*
@@ -347,7 +360,7 @@ class GraphCanvas{
 		/*empty equations array*/
 		this.equations = [];
 		/*get the equation from the document */
-		
+
 		let checked =  Array.from( document.forms.graphType.eqType ).filter( (e)=> e.checked );
 
 
