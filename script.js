@@ -155,6 +155,42 @@ function roundTo(number,decPlaces = 2){
 	let precision = Math.pow(10,decPlaces);
 	return Math.round(number*precision)/precision;
 }
+
+/*
+general animation algorithm from javascript.info*/
+function animate({timing, draw, duration}) {
+
+	let startTime = performance.now();
+
+	requestAnimationFrame(function animate(time) {
+		// timeFraction goes from 0 to 1
+		let timeFraction = (time - startTime) / duration;
+		if (timeFraction > 1) timeFraction = 1;
+
+		// calculate the current animation state
+		let progress = timing(timeFraction)
+
+		draw(progress); // draw it
+
+		if (timeFraction < 1) {
+			requestAnimationFrame(animate);
+		}
+
+	});
+}
+
+//converts a number to one of the temperature scales (F or C)
+function convert(number,to){
+	number = Number.parseFloat(number);
+	
+	switch(to){
+		case "C":
+			return ((number - 32) * 5/9);
+		case "F": 
+			return ((number * 9/5) + 32);
+			
+	}
+}
 /*makes subPanes full screen*/
 function makeFullScreen(){
 	document.querySelectorAll('.subPane').forEach( (e)=>{
