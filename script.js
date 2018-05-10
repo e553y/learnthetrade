@@ -55,7 +55,7 @@ function onLoad(){
 timeOut = null;
 function onResize(){
 	makeFullScreen();
-	centerThermometer();
+	//centerThermometer();
 
 
 }
