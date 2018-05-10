@@ -157,7 +157,7 @@ class ThermoGuage{
 		ctx.stroke();
 		
 		ctx.beginPath();
-		ctx.strokeStyle = arcStyles.color || "#fff";
+		ctx.strokeStyle = arcStyles.color || "aqua";
 		ctx.arc(this.centerX,this.centerY,this.guageArcRadius,this.startAngle + angle,this.endAngle);
 		ctx.stroke();
 		
