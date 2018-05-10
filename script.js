@@ -149,7 +149,7 @@ function evalStr(str){
 }
 
 /*accepts two arguments. a number and a decimal places to round to(2 by default) */
-function roundTo(number,decPlaces = 2){
+function floatFix(number,decPlaces = 2){
 	let precision = Math.pow(10,decPlaces);
 	return Math.round(number*precision)/precision;
 }
