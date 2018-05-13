@@ -280,3 +280,7 @@ input:checked + .slider:before {
 	
 }
 
+
+.button-link {
+	text-decoration: none;
+}

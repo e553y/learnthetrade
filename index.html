@@ -4,7 +4,7 @@
 		<title>Web Dev. Exercises</title>
 		<meta charset="UTF-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" type="text/css" href="styles.css?2.0"/>
+		<link rel="stylesheet" type="text/css" href="styles.css?2.0.1"/>
 		<script src="script.js?2.0"></script>
 		<script src="calculator.js?2.0"></script>
 		<script src="temp.js?2.0"></script>
@@ -118,7 +118,7 @@
 				</div>
 
 			</div>
-			<div class="tempContainer subPane">
+			<div class="tempContainer subPane" id="tempConverter">
 				<div class="centeralize">
 					<h1>Temperature converter</h1>
 					<p>Input a value in the text boxe to convert</p>
@@ -163,7 +163,9 @@
 
 				</div>
 				<div>
-					<input id="backToHome" type="button" class="rtrnButton" onclick="paneHandler(event)" value="< back to temperature converter">
+					<a href="#tempConverter" class="button-link">
+						<input id="backToHome" type="button" class="rtrnButton" onclick="paneHandler(event)" value="< back to temperature converter">
+					</a>
 				</div>
 			</div>
 		</div>
