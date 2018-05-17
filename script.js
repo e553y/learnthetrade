@@ -52,13 +52,18 @@ function onLoad(){
 
 
 //redraw thermometer canvason resize
+/*
 timeOut = null;
 function onResize(){
 	makeFullScreen();
 	//centerThermometer();
 
 
+
 }
+
+*/
+
 function paneHandler(event){
 	//alert(event);
 	//switching to parameters pane on doubleclick
