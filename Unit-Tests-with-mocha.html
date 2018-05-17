@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="eng">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Unit-Tests-with-mocha</title>
+		<link rel="stylesheet" href="">
+		<script src="script.js?2.0"></script>
+		<script src="calculator.js?2.0"></script>
+		<script src="temp.js?2.0"></script>
+		<script src="graph.js?2.0"></script>
+		<script src="thermometer.js?2.0"></script>
+		<script src="weather.js?2.0"></script>
+		<!-- add mocha css, to show results -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.css">
+		<!-- add mocha framework code -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.js"></script>
+		<script>
+			mocha.setup('bdd'); // minimal setup
+		</script>
+		<!-- add chai -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/chai/3.5.0/chai.js"></script>
+		<!-- add tests -->
+		<script src="tests.js"></script>
+		<script>
+			// make assert global
+			let assert = chai.assert;
+		</script>
+	</head>
+
+	<body>
+		<div id="mocha"></div>
+		<script type="application/javascript" >mocha.run()</script>
+	</body>
+</html>
