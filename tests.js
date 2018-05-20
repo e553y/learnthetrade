@@ -132,5 +132,40 @@ describe("calulator", function(){
 		})
 
 	})
+})
 
-})*/
+//GRAPH.JS
+describe( "graph.js", function () {
+	//create a canvas for tests
+	let canvas = document.createElement('canvas'); 
+	//create array with minimum and maximum values set
+	let canvasGraphObj = new GraphCanvas(canvas,[-20,20,-15,15]);
+	//test constructor
+	describe( "GraphCanvas( canvas, range )", function (){
+		it( "should create a graph with the given parameters ", function(){
+
+			//test if the parameters are set correctly
+			assert.equal( canvasGraphObj.canvas, canvas );
+			assert.equal( canvasGraphObj.minX, -20 ); 
+			assert.equal( canvasGraphObj.maxX, 20 ); 
+			assert.equal( canvasGraphObj.minY, -15 ); 
+			assert.equal( canvasGraphObj.maxY, 15 );
+
+		})
+	})
+
+	//test coordinate to pixel position converter
+	describe( "getPixelPos( xVal, yVal )", function () {
+		it( "should return pixel coordinates of x-y value"), function () {
+			
+			let test
+		}
+	})
+
+})
+//THERMOMETER.JS
+describe("thermometer Guage", function(){
+	describe("constructor( canvas, optionsObj )", function(){
+
+	})
+})
