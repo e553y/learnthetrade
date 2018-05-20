@@ -28,7 +28,7 @@ function zoomInOut(){
 		let yCoord;
 
 		/*convert coordinates to graph values */
-		[xCoord, yCoord ] = o.getCoordVal(event.offsetX,o.canvasHeight - event.offsetY);// subtract from canvas height to account for translated origin 
+		[xCoord, yCoord ] = o.getCoordVal( event.offsetX, event.offsetY );// subtract from canvas height to account for translated origin 
 
 		/*get which coordinate the click happened*/
 		/*didn't handle when clicked to left of first grid pos*/
@@ -137,7 +137,7 @@ class GraphCanvas{
 		return this.minX + (xPixel * this.scaleX);
 	}
 	getYCoordVal(yPixel){
-		return this.minY + (yPixel * this.scaleY); 
+		return this.minY + ( this.canvasHeight - yPixel ) * this.scaleY; 
 	}
 	/*check if x value is within range*/
 	/*takes an x value and returns a boolean if x value is within range*/
