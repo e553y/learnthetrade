@@ -54,11 +54,7 @@ describe("calulator", function(){
 
 	describe("clicked( event )", function(){
 
-		describe("perform arithmetics", function(){
 
-			//create dummy event
-			let dummyEvent = {};
-			dummyEvent.target.value = 1 ; 
 
 		//create dummy elements for expression and answer
 		//dummy expression output text box
@@ -127,7 +123,6 @@ describe("calulator", function(){
 			//expression should be equal to the last button 
 			assert.equal(dummyExpression.value,"1")
 
-			} )
 
 		})
 
