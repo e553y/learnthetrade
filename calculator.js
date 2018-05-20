@@ -1,8 +1,8 @@
-function clicked(e) {
+function clicked(event) {
 	let expression =  [];
 	let answer =  "";
 
-	function pressed(e){
+	function pressed(event){
 		let id = event.target.value;
 
 		if ((expression.length != 0) && //function to operate on answer by adding parenthesis 
