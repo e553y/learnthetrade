@@ -1,6 +1,8 @@
-describe("global functions", function(){
-	describe("evalStr(string)", function(){
-		describe("evaluates string as a mathmatical expression", function(){
+//SCRIPT.JS
+describe("global functions", function () {
+	'use strict';
+	describe("evalStr( string )", function () {
+		describe("evaluates string as a mathmatical expression", function () {
 
 			it("evaluates addition", function(){
 
