@@ -47,10 +47,12 @@ describe("global functions", function () {
 
 })
 
-/* NEED TO REFACTOR LATER THEN DO TESTS
-desctibe("calulator", function(){
+/* --NEED TO REFACTOR-- L
+THEN DO TESTS */
+//CALCULATOR.JS
+describe("calulator", function(){
 
-	desctibe("clicked( event )", function(){
+	describe("clicked( event )", function(){
 
 		describe("perform arithmetics", function(){
 
@@ -58,10 +60,72 @@ desctibe("calulator", function(){
 			let dummyEvent = {};
 			dummyEvent.target.value = 1 ; 
 
-			it("should add the pressed value to expression", function(){
+		//create dummy elements for expression and answer
+		//dummy expression output text box
+		let dummyExpression = document.createElement("output");
+		//dummy answer output text box
+		let dummyAnswer = document.createElement("output"); 
+		//create dummy button
+		let dummyButton = document.createElement("button")
+		//add SUT listner to dummy button
+		dummyButton.onclick = clicked();
+
+		//dummy document.querySelector to return dummy elements
+		let stubQuerySelctor = sinon.stub(document , "querySelector");
+		stubQuerySelctor.withArgs("#exp").returns(dummyExpression);
+		stubQuerySelctor.withArgs("#ans").returns(dummyAnswer); 
+
+		it("should add the pressed value to expression", function(){
 
 
-				assert.equal()
+			//successive buttons to click
+			let buttonPresses = ["1","2","3","4","5","6","7","8","9","0","+","-","/","*"];
+			for( let i of buttonPresses){
+				//assign the value to dummy button
+				dummyButton.value = i; 
+
+				//simulate the click
+				dummyButton.click();
+
+
+			}
+			//all should be inserted to dummy expression output
+			assert.equal(dummyExpression.value, buttonPresses.join(""));
+			//"C" press should clear expresion value
+			dummyButton.value = "C";
+			dummyButton.click();
+			//everything should be cleared now
+			assert.equal( dummyExpression.value, "");
+
+		} )
+		it("should evaluate the expression on '=' press", ()=>{
+
+
+			//insert expression by clicking loop
+			for( let i of ["1","+","2","="]){
+				dummyButton.value = i; 
+				//simulate the click
+				dummyButton.click();
+			}
+
+			//check dummy answer output box for evaluation
+			assert.equal(dummyAnswer.value, "3");
+
+		})
+		it("after calculation, should clear output when a number pressed ", function(){
+			//successive buttons to click
+			let buttonPresses = ["1","*","3","-","5","/","+","8","9","="];
+			for( let i of buttonPresses){
+				dummyButton.value = i; 
+
+				//simulate the click
+				dummyButton.click();
+			}
+			//then press any number
+			dummyButton.value = "1";
+			dummyButton.click();
+			//expression should be equal to the last button 
+			assert.equal(dummyExpression.value,"1")
 
 			} )
 
