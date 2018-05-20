@@ -60,9 +60,7 @@ class GraphCanvas{
 		this.canvasHeight = canvas.height;
 		this.ctx = canvas.getContext('2d');
 
-		//translate origin to bottom left corner of canvas
-		this.ctx.translate(0,this.canvasHeight);
-
+		
 		/*if range array is not provided
 		 set range of x and y from -5 to 5 by default
 		 */
@@ -81,7 +79,7 @@ class GraphCanvas{
 		( units per pixel)*/
 		this.scaleX = (this.maxX - this.minX)/this.canvasWidth;
 		this.scaleY = (this.maxY - this.minY)/this.canvasHeight;
-
+		
 		/*minimum and maximum space between grid lines*/
 		/*minimum grid separation in pixels*/
 		this.gridMin = 40;
@@ -126,7 +124,7 @@ class GraphCanvas{
 	}
 	getYPixelPos(yVal){
 		/*return the pixel position  of a Y value*/
-		return -1 * (yVal - this.minY)/this.scaleY;
+		return this.canvasHeight - ( yVal - this.minY )/this.scaleY;
 	}
 
 
@@ -156,7 +154,7 @@ class GraphCanvas{
 	}	
 	/*this clears entire graph*/
 	clearGraph(){
-		this.ctx.clearRect(0,-this.canvasHeight,this.canvasWidth,this.canvasHeight);
+		this.ctx.clearRect( 0, 0, this.canvasWidth, this.canvasHeight );
 	}
 	updateRange(range){
 
@@ -224,17 +222,18 @@ class GraphCanvas{
 		*/
 		this.ctx.save()//saving the default
 		this.ctx.lineWidth = 2;
-
-		if(this.minX <= 0 && this.maxX >= 0 ){//check if y axis is within the range of the canvas graph
+		/*X AXIS */
+		if( this.isInYRange(0) ){//check if x axis is within the range of the canvas graph
 			this.ctx.beginPath();
-			this.ctx.moveTo(-this.minX/this.scaleX,0);//refactor
-			this.ctx.lineTo(-this.minX/this.scaleX,-this.canvasHeight);
+			this.ctx.moveTo( this.getXPixelPos( this.minX ), this.getYPixelPos(0) );//refactor
+			this.ctx.lineTo( this.getXPixelPos( this.maxX ), this.getYPixelPos(0) );
 			this.ctx.stroke();
 		}
-		if(this.minY <= 0 && this.maxY >= 0 ){//check if x axis is within the range of the canvas graph
+		/*Y AXIS*/
+		if( this.isInXRange(0) ){//check if y axis is within the range of the canvas graph
 			this.ctx.beginPath();
-			this.ctx.moveTo(0,this.minY/this.scaleY);//refactor
-			this.ctx.lineTo(this.canvasWidth,this.minY/this.scaleY);
+			this.ctx.moveTo( this.getXPixelPos(0), this.getYPixelPos( this.minY ) );
+			this.ctx.lineTo( this.getXPixelPos(0), this.getYPixelPos( this.maxY ) );
 			this.ctx.stroke();
 		}
 
@@ -250,6 +249,7 @@ class GraphCanvas{
 		this.ctx.lineWidth = 1;//make the line width 1 px
 		this.ctx.strokeStyle = "lightgray"//make the grid light gray
 		this.ctx.fillStyle = "gray"//make the labels light gray
+
 		/*VERTICAL GRID*/
 		/*if y axis exist use it*/
 		//y axis or the largest integer displayable in the graph
@@ -283,14 +283,14 @@ class GraphCanvas{
 		this.ctx.beginPath();
 		for(let j = this.getXPixelPos(firstXGrid); j <= this.canvasWidth; j+=vGridDiff){
 			this.ctx.moveTo( Math.floor(j) + 0.5 ,0);
-			this.ctx.lineTo( Math.floor(j) + 0.5 ,-this.canvasHeight);
+			this.ctx.lineTo( Math.floor(j) + 0.5 , this.canvasHeight);
 			this.ctx.stroke();
 
 
 		}
 		/*draw label text on vertical grid lines*/
 		/*baseline for x axis labels */
-		let xBaseline = 0 ;//set to the bottom of the canvas
+		let xBaseline = this.canvasHeight ;//set to the bottom of the canvas
 		/*check if x axis exists*/
 		if( this.minY < 0 && this.maxY > 0 ) xBaseline = this.getYPixelPos(0)
 
