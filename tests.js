@@ -28,7 +28,7 @@ describe("global functions", function () {
 		})
 
 	})
-	describe("floatFix(number, n)", function(){
+	describe("floatFix( number, n)", function(){
 		it("rounds floating numbers to n decimal digits", function(){
 			assert.equal( floatFix(Math.PI, 4 ), 3.1416)
 		})
