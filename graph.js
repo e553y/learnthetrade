@@ -116,8 +116,8 @@ class GraphCanvas{
 
 
 	/*coordinates to pixel values*/
-	getPixelPos(xVal,yVal){
-		return [ this.getXPixelPos(xVal),this.getXPixelPos(yVal) ];
+	getPixelPos( coordArr ){
+		return [ this.getXPixelPos(coordArr[0]),this.getYPixelPos(coordArr[1]) ];
 	}
 	getXPixelPos(xVal){
 		/*returns the pixel position  of an X value */
