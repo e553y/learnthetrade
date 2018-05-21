@@ -4,21 +4,21 @@ describe("global functions", function () {
 	describe("evalStr( string )", function () {
 		describe("evaluates string as a mathmatical expression", function () {
 
-			it("evaluates addition", function(){
+			it("evaluates addition", function () {
 
-				assert.equal( evalStr("1 + 1"), 2 );	
+				assert.equal(evalStr("1 + 1"), 2);
 			});
 
-			it("evaluates subtraction", function(){
-				assert.equal( evalStr("10 - 1"), 9 ); 	
+			it("evaluates subtraction", function () {
+				assert.equal(evalStr("10 - 1"), 9);
 			});
 
-			it("evaluates multiplication", function(){
-				assert.equal(  evalStr("10 * 3") , 30 )
+			it("evaluates multiplication", function () {
+				assert.equal(evalStr("10 * 3"), 30)
 			});
 
-			it("evaluates division", function(){
-				assert.equal(  evalStr("10 / 2") , 5 )
+			it("evaluates division", function () {
+				assert.equal(evalStr("10 / 2"), 5)
 			});
 
 
@@ -28,20 +28,20 @@ describe("global functions", function () {
 		})
 
 	})
-	describe("floatFix( number, n)", function(){
-		it("rounds floating numbers to n decimal digits", function(){
-			assert.equal( floatFix(Math.PI, 4 ), 3.1416)
+	describe("floatFix( number, n)", function () {
+		it("rounds floating numbers to n decimal digits", function () {
+			assert.equal(floatFix(Math.PI, 4), 3.1416)
 		})
-		it("rounds to two decimal digits by default", function(){
-			assert.equal( floatFix(Math.PI), 3.14)
+		it("rounds to two decimal digits by default", function () {
+			assert.equal(floatFix(Math.PI), 3.14)
 		})
 	})
-	describe( "convert( number, to )", function(){
-		it(" to = 'C' converts from fahrenheit to celcius", function(){
-			assert.equal( convert( 212 , "C"), 100); 
+	describe("convert( number, to )", function () {
+		it(" to = 'C' converts from fahrenheit to celcius", function () {
+			assert.equal(convert(212, "C"), 100);
 		})
-		it(" to = 'F' converts from celcius to fahrenheit", function(){
-			assert.equal( convert( 0 , "F"), 32); 
+		it(" to = 'F' converts from celcius to fahrenheit", function () {
+			assert.equal(convert(0, "F"), 32);
 		})
 	})
 
@@ -50,9 +50,9 @@ describe("global functions", function () {
 /* --NEED TO REFACTOR-- L
 THEN DO TESTS */
 //CALCULATOR.JS
-describe("calulator", function(){
+describe("calulator", function () {
 
-	describe("clicked( event )", function(){
+	describe("clicked( event )", function () {
 
 
 
@@ -60,25 +60,25 @@ describe("calulator", function(){
 		//dummy expression output text box
 		let dummyExpression = document.createElement("output");
 		//dummy answer output text box
-		let dummyAnswer = document.createElement("output"); 
+		let dummyAnswer = document.createElement("output");
 		//create dummy button
 		let dummyButton = document.createElement("button")
 		//add SUT listner to dummy button
 		dummyButton.onclick = clicked();
 
 		//dummy document.querySelector to return dummy elements
-		let stubQuerySelctor = sinon.stub(document , "querySelector");
+		let stubQuerySelctor = sinon.stub(document, "querySelector");
 		stubQuerySelctor.withArgs("#exp").returns(dummyExpression);
-		stubQuerySelctor.withArgs("#ans").returns(dummyAnswer); 
+		stubQuerySelctor.withArgs("#ans").returns(dummyAnswer);
 
-		it("should add the pressed value to expression", function(){
+		it("should add the pressed value to expression", function () {
 
 
 			//successive buttons to click
-			let buttonPresses = ["1","2","3","4","5","6","7","8","9","0","+","-","/","*"];
-			for( let i of buttonPresses){
+			let buttonPresses = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "+", "-", "/", "*"];
+			for (let i of buttonPresses) {
 				//assign the value to dummy button
-				dummyButton.value = i; 
+				dummyButton.value = i;
 
 				//simulate the click
 				dummyButton.click();
@@ -91,15 +91,15 @@ describe("calulator", function(){
 			dummyButton.value = "C";
 			dummyButton.click();
 			//everything should be cleared now
-			assert.equal( dummyExpression.value, "");
+			assert.equal(dummyExpression.value, "");
 
-		} )
-		it("should evaluate the expression on '=' press", ()=>{
+		})
+		it("should evaluate the expression on '=' press", () => {
 
 
 			//insert expression by clicking loop
-			for( let i of ["1","+","2","="]){
-				dummyButton.value = i; 
+			for (let i of ["1", "+", "2", "="]) {
+				dummyButton.value = i;
 				//simulate the click
 				dummyButton.click();
 			}
@@ -108,11 +108,11 @@ describe("calulator", function(){
 			assert.equal(dummyAnswer.value, "3");
 
 		})
-		it("after calculation, should clear output when a number pressed ", function(){
+		it("after calculation, should clear output when a number pressed ", function () {
 			//successive buttons to click
-			let buttonPresses = ["1","*","3","-","5","/","+","8","9","="];
-			for( let i of buttonPresses){
-				dummyButton.value = i; 
+			let buttonPresses = ["1", "*", "3", "-", "5", "/", "+", "8", "9", "="];
+			for (let i of buttonPresses) {
+				dummyButton.value = i;
 
 				//simulate the click
 				dummyButton.click();
@@ -121,7 +121,7 @@ describe("calulator", function(){
 			dummyButton.value = "1";
 			dummyButton.click();
 			//expression should be equal to the last button 
-			assert.equal(dummyExpression.value,"1")
+			assert.equal(dummyExpression.value, "1")
 
 
 		})
@@ -130,21 +130,21 @@ describe("calulator", function(){
 })
 
 //GRAPH.JS
-describe( "graph.js", function () {
+describe("graph.js", function () {
 	//create a canvas for tests
-	let canvas = document.createElement('canvas'); 
+	let canvas = document.createElement('canvas');
 	//create array with minimum and maximum values set
-	let canvasGraphObj = new GraphCanvas(canvas,[-20,20,-15,15]);
+	let canvasGraphObj = new GraphCanvas(canvas, [-20, 20, -15, 15]);
 	//test constructor
-	describe( "GraphCanvas( canvas, range )", function (){
-		it( "should create a graph with the given parameters ", function(){
+	describe("GraphCanvas( canvas, range )", function () {
+		it("should create a graph with the given parameters ", function () {
 
 			//test if the parameters are set correctly
-			assert.equal( canvasGraphObj.canvas, canvas );
-			assert.equal( canvasGraphObj.minX, -20 ); 
-			assert.equal( canvasGraphObj.maxX, 20 ); 
-			assert.equal( canvasGraphObj.minY, -15 ); 
-			assert.equal( canvasGraphObj.maxY, 15 );
+			assert.equal(canvasGraphObj.canvas, canvas);
+			assert.equal(canvasGraphObj.minX, -20);
+			assert.equal(canvasGraphObj.maxX, 20);
+			assert.equal(canvasGraphObj.minY, -15);
+			assert.equal(canvasGraphObj.maxY, 15);
 
 		})
 	})
@@ -232,8 +232,8 @@ describe( "graph.js", function () {
 
 })
 //THERMOMETER.JS
-describe("thermometer Guage", function(){
-	describe("constructor( canvas, optionsObj )", function(){
+describe("thermometer Guage", function () {
+	describe("constructor( canvas, optionsObj )", function () {
 
 	})
 })
