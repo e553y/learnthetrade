@@ -150,12 +150,85 @@ describe( "graph.js", function () {
 	})
 
 	//test coordinate to pixel position converter
-	describe( "getPixelPos( xVal, yVal )", function () {
-		it( "should return pixel coordinates of x-y value"), function () {
-			
-			let test
-		}
+	describe("getPixelPos( coordArr )", function () {
+		it("should return pixel coordinates of x-y value", function () {
+			//coordinates and thier expected corresponding pixel pos
+			let testCoordinates = new Map([ //can be added to in the future
+				[[-20, -15], [0, canvasGraphObj.canvasHeight]],
+				[[-20, 15], [0, 0]],
+				[[20, 15], [canvasGraphObj.canvasWidth, 0]],
+				[[20, -15], [canvasGraphObj.canvasWidth, canvasGraphObj.canvasHeight]],
+
+			])
+
+			for (let entry of testCoordinates) {
+
+				let arguments = entry[0];
+				let expected = entry[1];
+				assert.deepEqual(canvasGraphObj.getPixelPos(arguments), expected);
+			}
+
+		})
+
 	})
+	//test pixel to coordinate converter
+	describe("getCoordVal( pixelCoordArr )", function () {
+		it("should return x - y coordinates of pixel position array", function () {
+			let testCoordinates = new Map([ //can be added to in the future
+				[[-20, -15], [0, canvasGraphObj.canvasHeight]],
+				[[-20, 15], [0, 0]],
+				[[20, 15], [canvasGraphObj.canvasWidth, 0]],
+				[[20, -15], [canvasGraphObj.canvasWidth, canvasGraphObj.canvasHeight]],
+
+			])
+			for (let entry of testCoordinates) {
+
+				let arguments = entry[1];
+				let expected = entry[0];
+
+				assert.deepEqual(canvasGraphObj.getCoordVal(arguments[0], arguments[1]), expected);
+			}
+
+		})
+	})
+	
+	describe("isInXRange( x )", function () {
+		it("should return if x is withing the range of graph", function () {
+			let testXPositions = new Map([
+				[-20, false ],//the edge should not be considered in range
+				[-19.999, true],
+				[0, true],
+				[19.999, true],
+				[20,false],
+			])
+			for (let entry of testXPositions) {
+
+				let arguments = entry[0];
+				let expected = entry[1];
+
+				assert.strictEqual(canvasGraphObj.isInXRange(arguments), expected);
+			}
+		})
+	})
+	describe("isInYRange( y )", function () {
+		it("should return if y is within the range of graph", function () {
+			let testXPositions = new Map([
+				[-15, false ],//the edge should not be considered in range
+				[-14.999, true],
+				[0, true],
+				[14.999, true],
+				[15,false],
+			])
+			for (let entry of testXPositions) {
+
+				let arguments = entry[0];
+				let expected = entry[1];
+
+				assert.strictEqual(canvasGraphObj.isInYRange(arguments), expected);
+			}
+		})
+	})
+	
 
 })
 //THERMOMETER.JS
