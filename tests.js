@@ -81,54 +81,69 @@ THEN DO TESTS */
 					//assign the value to dummy button
 					dummyButton.value = i;
 
-				//simulate the click
+					//simulate the click
+					dummyButton.click();
+
+
+				}
+				//all should be inserted to dummy expression output
+				assert.equal(dummyExpression.value, buttonPresses.join(""));
+				//"C" press should clear expresion value
+				dummyButton.value = "C";
 				dummyButton.click();
+				//everything should be cleared now
+				assert.equal(dummyExpression.value, "");
+
+			})
+			it("should evaluate the expression on '=' press", () => {
 
 
-			}
-			//all should be inserted to dummy expression output
-			assert.equal(dummyExpression.value, buttonPresses.join(""));
-			//"C" press should clear expresion value
-			dummyButton.value = "C";
-			dummyButton.click();
-			//everything should be cleared now
-			assert.equal(dummyExpression.value, "");
+				//insert expression by clicking loop
+				for (let i of ["1", "+", "2", "="]) {
+					dummyButton.value = i;
+					//simulate the click
+					dummyButton.click();
+				}
+
+				//check dummy answer output box for evaluation
+				assert.equal(dummyAnswer.value, "3");
+
+			})
+			it("after calculation, should clear output when a number pressed ", function () {
+				//successive buttons to click
+				let buttonPresses = ["1", "*", "3", "-", "5", "/", "+", "8", "9", "="];
+				for (let i of buttonPresses) {
+					dummyButton.value = i;
+
+					//simulate the click
+					dummyButton.click();
+				}
+				//then press any number
+				dummyButton.value = "1";
+				dummyButton.click();
+				//expression should be equal to the last button 
+				assert.equal(dummyExpression.value, "1")
+
+
+			})
 
 		})
-		it("should evaluate the expression on '=' press", () => {
-
-
-			//insert expression by clicking loop
-			for (let i of ["1", "+", "2", "="]) {
-				dummyButton.value = i;
-				//simulate the click
-				dummyButton.click();
-			}
-
-			//check dummy answer output box for evaluation
-			assert.equal(dummyAnswer.value, "3");
-
-		})
-		it("after calculation, should clear output when a number pressed ", function () {
-			//successive buttons to click
-			let buttonPresses = ["1", "*", "3", "-", "5", "/", "+", "8", "9", "="];
-			for (let i of buttonPresses) {
-				dummyButton.value = i;
-
-				//simulate the click
-				dummyButton.click();
-			}
-			//then press any number
-			dummyButton.value = "1";
-			dummyButton.click();
-			//expression should be equal to the last button 
-			assert.equal(dummyExpression.value, "1")
-
-
-		})
-
 	})
-})
+
+	//GRAPH.JS
+	describe("graph.js", function () {
+
+
+		})
+
+		//test constructor
+		describe("GraphCanvas( canvas, range )", function () {
+
+			it("should create a graph with the given parameters ", function () {
+				//create a canvas for tests
+				let canvas = document.createElement('canvas');
+				//create array with minimum and maximum values set
+				let canvasGraphObj = new GraphCanvas(canvas, [-20, 20, -15, 15]);
 
 //GRAPH.JS
 describe("graph.js", function () {
