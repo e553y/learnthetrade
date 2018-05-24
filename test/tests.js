@@ -411,10 +411,8 @@ THEN DO TESTS */
 
 			//it should save ctx first
 			it("should save context before anything else", function () {
-				console.log(spies.get("save").called);
 				//call SUT
 				canvasGraphObj.drawEquations();
-				console.log(spies.get("save").called);
 				assert(spies.get("save").called);
 
 			})
