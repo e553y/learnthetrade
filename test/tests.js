@@ -1,4 +1,5 @@
-describe("All tests for LearnTheTrade site", function () {
+describe("LearnTheTrade Unit Tests", function () {
+
 	//SCRIPT.JS
 	describe("global functions", function () {
 		'use strict';
@@ -48,8 +49,6 @@ describe("All tests for LearnTheTrade site", function () {
 
 	})
 
-	/* --NEED TO REFACTOR-- L
-THEN DO TESTS */
 	//CALCULATOR.JS
 	describe("calulator", function () {
 
@@ -133,9 +132,6 @@ THEN DO TESTS */
 	//GRAPH.JS
 	describe("graph.js", function () {
 
-
-
-		//test constructor
 		describe("GraphCanvas( canvas, range )", function () {
 
 			it("should create a graph with the given parameters ", function () {
@@ -155,7 +151,6 @@ THEN DO TESTS */
 			})
 		})
 
-		//test coordinate to pixel position converter
 		describe("getPixelPos( coordArr )", function () {
 			//create a canvas for tests
 			let canvas = document.createElement('canvas');
@@ -185,8 +180,6 @@ THEN DO TESTS */
 
 		})
 
-
-		//test pixel to coordinate converter
 		describe("getCoordVal( pixelCoordArr )", function () {
 			//create a canvas for tests
 			let canvas = document.createElement('canvas');
@@ -197,12 +190,12 @@ THEN DO TESTS */
 				{
 					expected: [-20, -15],
 					input: [0, canvasGraphObj.canvasHeight],
-					desc: "top left corner",
+					desc: "bottom left corner",
 				},
 				{
 					expected: [-20, 15],
 					input: [0, 0],
-					desc: "bottom left corner",
+					desc: "top left corner",
 				},
 				{
 					expected: [20, 15],
@@ -226,7 +219,6 @@ THEN DO TESTS */
 
 		});
 
-		//test range inclusion evaluator
 		describe("isInXRange( x )", function () {
 			//create a canvas for tests
 			let canvas = document.createElement('canvas');
@@ -265,7 +257,6 @@ THEN DO TESTS */
 			}
 
 		})
-
 
 		describe("isInYRange( y )", function () {
 			//create a canvas for tests
@@ -306,8 +297,6 @@ THEN DO TESTS */
 
 		})
 
-
-
 		describe("clearGraph()", function () {
 			//create a canvas for tests
 			let canvas = document.createElement('canvas');
@@ -325,7 +314,6 @@ THEN DO TESTS */
 				graphSpy.restore();
 			})
 		})
-
 
 		describe("updateRange( range )", function () {
 
@@ -383,13 +371,15 @@ THEN DO TESTS */
 
 			//create a canvas for tests
 			let canvas = document.createElement('canvas');
+			canvas.width = canvas.height = 200;
+
 			//create array with minimum and maximum values set
 			let canvasGraphObj = new GraphCanvas(canvas, [-20, 20, -15, 15]);
 
 			let spies;
 
 			beforeEach(function () {
-				//prepare spies
+				//prepare spies for all CanvasRenderingContext2D methods
 				spies = new Map();
 				for (property in canvasGraphObj.ctx) {
 
@@ -400,7 +390,7 @@ THEN DO TESTS */
 					}
 				}
 			});
-			//destroy spies each function test
+			//destroy spies after each function test
 			afterEach(function () {
 
 				for (spy of spies.values()) {
@@ -410,21 +400,348 @@ THEN DO TESTS */
 			});
 
 			//it should save ctx first
-			it("should save context before anything else", function () {
+			it("should save canvas-drawing-context", function () {
 				//call SUT
 				canvasGraphObj.drawEquations();
-				assert(spies.get("save").called);
 
+				assert(spies.get("save").calledBefore(spies.get("restore")), "context not saved before restore");
+
+			})
+			it("should draw a canvas that matches expected graph", function (done) {
+
+				//prepare a canvas to draw on
+				let canvas = document.createElement('canvas');
+				canvas.width = 200;
+				canvas.height = 200;
+
+				//create an instance of CanvasGraph
+				let canvasGraphObj = new GraphCanvas(canvas, [-10, 10, -10, 10]);
+				//add equations 
+				canvasGraphObj.equations = [
+					//add test equations (order matters)
+					(x) => x,
+					(x) => x * x,
+					(x) => {
+						if (x) {
+							return 1 / x
+						} else {
+							return "asymptote"
+						}
+					},
+
+					(x) => Math.sqrt(1 - x ** 2),
+					(x) => Math.abs(1 * x),
+					(x) => (1 * Math.abs(Math.sin(x)))
+				];
+
+				//draw on canvas	
+				//SUBJECT UNDER TEST
+				canvasGraphObj.drawEquations()
+
+				//test output against a predrawn image 
+				pixelDiffTester(
+					"sample_equations.png", //expected image source url
+					canvasGraphObj.canvas, //cavas to be tested
+					0, //number pixels tolerated if diferent 
+					done //called at the end. called with error instance if test not passed
+
+				)
+			})
+		})
+
+		describe("drawAxes()", function () {
+
+			//create a canvas for tests
+			let canvas = document.createElement('canvas');
+			//create array with minimum and maximum values set
+			let canvasGraphObj = new GraphCanvas(canvas, [-20, 20, -15, 15]);
+
+			let spies;
+
+			beforeEach(function () {
+				//prepare spies for all CanvasRenderingContext2D methods
+				spies = new Map();
+				for (property in canvasGraphObj.ctx) {
+
+					//check if property is a function
+					if (typeof canvasGraphObj.ctx[property] == "function") {
+						//add spy to collection map
+						spies.set(property, sinon.spy(canvasGraphObj.ctx, property));
+					}
+				}
+			});
+			//destroy spies after each function test
+			afterEach(function () {
+
+				for (spy of spies.values()) {
+					spy.restore()
+				}
+
+			});
+
+			it("should save canvas-drawing-context", function () {
+				//call SUT
+				canvasGraphObj.drawEquations();
+
+				assert(spies.get("save").calledBefore(spies.get("restore")), "context not saved before restore");
+
+			});
+
+			it("should draw a canvas that matches expected graph", function (done) {
+
+				//prepare a canvas to draw on
+				let canvas = document.createElement('canvas');
+				canvas.width = 200;
+				canvas.height = 200;
+
+				//create an instance of CanvasGraph
+				let canvasGraphObj = new GraphCanvas(canvas, [-10, 10, -10, 10]);
+
+				//draw on canvas
+				//SUBJECT UNDER TEST
+				canvasGraphObj.drawAxes()
+
+				//test output against a predrawn image 
+				pixelDiffTester(
+					"sample_axes.png", //expected image source url
+					canvasGraphObj.canvas, //cavas to be tested
+					0, //number pixels tolerated if diferent 
+					done //called at the end. called with error instance if test not passed
+
+				)
+
+			})
+
+
+
+		})
+
+		describe("drawGrid()", function () {
+			//create a canvas for tests
+			let canvas = document.createElement('canvas');
+			//create array with minimum and maximum values set
+			let canvasGraphObj = new GraphCanvas(canvas, [-20, 20, -15, 15]);
+
+			let spies;
+
+			beforeEach(function () {
+				//prepare spies for all CanvasRenderingContext2D methods
+				spies = new Map();
+				for (property in canvasGraphObj.ctx) {
+
+					//check if property is a function
+					if (typeof canvasGraphObj.ctx[property] == "function") {
+						//add spy to collection map
+						spies.set(property, sinon.spy(canvasGraphObj.ctx, property));
+					}
+				}
+			});
+			//destroy spies after each function test
+			afterEach(function () {
+
+				for (spy of spies.values()) {
+					spy.restore()
+				}
+
+			});
+
+			it("should save canvas-drawing-context", function () {
+				//call SUT
+				canvasGraphObj.drawEquations();
+
+				assert(spies.get("save").calledBefore(spies.get("restore")), "context not saved before restore");
+
+			});
+
+			it("should draw a canvas that matches expected graph", function (done) {
+
+				//prepare a canvas to draw on
+				let canvas = document.createElement('canvas');
+				canvas.width = 200;
+				canvas.height = 200;
+
+				//create an instance of CanvasGraph
+				let canvasGraphObj = new GraphCanvas(canvas, [-10, 10, -10, 10]);
+
+				//draw on canvas
+				//SUBJECT UNDER TEST
+				canvasGraphObj.drawGrid()
+
+				//test output against a predrawn image 
+				pixelDiffTester(
+					"sample_grid.png", //expected image source url
+					canvasGraphObj.canvas, //cavas to be tested
+					0, //number pixels tolerated if diferent 
+					done //called at the end. called with error instance if test not passed
+
+				)
 			})
 		})
 
 
-
 	})
+
 	//THERMOMETER.JS
-	describe("thermometer Guage", function () {
-		describe("constructor( canvas, optionsObj )", function () {
+	describe("Thermometer Guage", function () {
+
+		describe("constructor( canvas, options )", function () {
+			it("should create a guage with the given parameters ", function () {
+				//create a canvas for tests
+				let canvas = document.createElement('canvas');
+				//a thermoGuageObject with options Object parameters set
+				let thermoGuageObject = new ThermoGuage(canvas, {
+					min: 0,
+					max: 100
+				});
+
+
+				//test if the parameters are set correctly
+				assert.equal(thermoGuageObject.canvas, canvas);
+				assert.equal(thermoGuageObject.minC, 0);
+				assert.equal(thermoGuageObject.maxC, 100);
+			})
 
 		})
+		describe("clearGraph()", function () {
+			//create a canvas for tests
+			let canvas = document.createElement('canvas');
+			//create array with minimum and maximum values set
+			let thermoGuageObj = new ThermoGuage(canvas);
+
+			it("should clear the entire canvas", function () {
+
+				let ctxSpy = sinon.spy(thermoGuageObj.ctx, "clearRect");
+
+				thermoGuageObj.clearCanvas();
+				//check if ctx.clearRect is called with correct arguments
+				assert(ctxSpy.calledWith(0, 0, thermoGuageObj.canvas.width, thermoGuageObj.canvas.height));
+				//remove spy wrapper
+				ctxSpy.restore();
+			})
+		})
+
+		describe("drawGuageArc()", function () {
+
+			it("its output should match expected image", function (done) {
+				let canvas = document.createElement('canvas');
+				canvas.width = 200;
+				canvas.height = 200;
+				//a thermoGuageObject with options Object parameters set
+				let thermoGuageObject = new ThermoGuage(canvas)
+
+				//SUBJECT UNDER TEST	
+				thermoGuageObject.drawGuageArc()
+
+				pixelDiffTester(
+					"sample_guageArc.png", //expected output image
+					thermoGuageObject.canvas, //actual output canvas
+					0, //tolerance
+					done //callback called with error if pixels are different than expected fails
+				)
+
+			})
+
+
+		})
+		describe("drawGuageNeedle()", function () {
+
+			it("its output should match expected image", function (done) {
+				let canvas = document.createElement('canvas');
+				canvas.width = 200;
+				canvas.height = 200;
+				//a thermoGuageObject with options Object parameters set
+				let thermoGuageObject = new ThermoGuage(canvas)
+
+				//SUBJECT UDER TEST	
+				thermoGuageObject.drawGuageNeedle()
+
+				pixelDiffTester(
+					"sample_guageNeedle.png", //expected output image
+					thermoGuageObject.canvas, //actual output canvas
+					0, //tolerance
+					done //callback called with error instance if test fails
+				)
+
+			})
+
+
+		})
+
 	})
 })
+
+/*global helper functions*/
+
+/*
+ *pixelDiffTester
+ *compares expected graph with one drawn by the function under test
+ *and returns the number of pixels that are different 
+ *@param {String} expectedImageUrl: url of the image of the expected graph
+ *@param {CanvasElement} canvasUnderTest: canvas to be compared to the expected image
+ *@param {number} tolerance: maximum number of different aceptable
+ *@param {Function} done: callback function called with truthy value if test passed
+ *						  and with a falsy value if test failed
+ *MAKE SURE EXPECTED IMAGE AND CANVAS ARE BOTH 200px X 200px
+ */
+function pixelDiffTester(expectedImageUrl, canvasUnderTest, tolerance, done) {
+
+
+	//test canvas to draw on 
+	let testCanvas = document.createElement('canvas');
+	testCanvas.width = 200;
+	testCanvas.height = 200;
+
+	//asycronously prepare predrawn canvas
+	let promise = new Promise(function (resolve, reject) {
+
+		//prepare canvas to hold image
+		let expCanvas = document.createElement('canvas');
+		expCanvas.id = "expCanvas";
+		expCanvas.width = 200;
+		expCanvas.height = 200;
+
+		//retrieve expected image
+		let img = new Image(200, 200);
+		img.src = expectedImageUrl;
+		//draw on canvas when loaded;
+		img.onload = () => {
+			expCanvas.getContext('2d').drawImage(img, 0, 0);
+			resolve(expCanvas);
+		};
+	})
+
+
+	//called asyncronously when expected graph is drawn
+	promise.then((expCanvas) => {
+		//get image data of canvases
+		let expImgData = expCanvas.getContext('2d').getImageData(0, 0, 200, 200)
+
+		let testImgData = canvasUnderTest.getContext('2d').getImageData(0, 0, 200, 200)
+
+		//prepare canvas to hold differnce
+		let diffCanvas = document.createElement('canvas');
+		diffCanvas.width = 200;
+		diffCanvas.height = 200;
+		//expose image data for the differnce canvas 
+		let diffCanvasData = diffCanvas.getContext('2d').getImageData(0, 0, 200, 200)
+
+		//image data comparing API from "github.com/mapbox/pixelmatch"
+		let diff = pixelmatch(
+
+			expImgData.data, //expected output
+			testImgData.data, //actual output
+			diffCanvasData.data,
+			200, //width of image data arrays
+			200 //height of image data arrays
+		)
+
+		//put image data back in difCanvas for display
+		diffCanvas.getContext('2d').putImageData(diffCanvasData, 0, 0)
+
+		if (diff <= tolerance) {
+			done();
+		} else {
+			done(new Error(`${diff} pixels drawn on canvas are different than expected`))
+		}
+	})
+}
